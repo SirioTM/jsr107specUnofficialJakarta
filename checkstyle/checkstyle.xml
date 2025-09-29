@@ -23,10 +23,7 @@
         <property name="max" value="1400"/>
     </module>
 
-    <!-- Duplicate Code -->
-    <module name="StrictDuplicateCode">
-        <property name="min" value="30"/>
-    </module>
+    <!-- Duplicate Code => replaced by maven-pmd-plugin -->
 
     <module name="NewlineAtEndOfFile">
         <property name="lineSeparator" value="lf"/>
