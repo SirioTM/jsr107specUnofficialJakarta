@@ -5,13 +5,12 @@
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
-        <version>7</version>
-        <!--Fixes broken Maven 3 warning-->
+        <version>9</version>
         <relativePath/>
     </parent>
-    <groupId>javax.cache</groupId>
+    <groupId>jakarta.cache</groupId>
     <artifactId>cache-api</artifactId>
-    <version>1.1.2-SNAPSHOT</version>
+    <version>0.1.0</version>
     <packaging>jar</packaging>
 
     <name>JSR107 API and SPI</name>
@@ -35,12 +34,12 @@
         <!--This is only needed if you are using a CDI based implementation of the annotations support.
             In CDI 1.1. we should be able to remove this dependency completely. -->
         <dependency>
-            <groupId>javax.enterprise</groupId>
-            <artifactId>cdi-api</artifactId>
-            <version>1.0-SP4</version>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+            <version>4.1.0</version>
             <scope>provided</scope>
             <optional>true</optional>
-            <exclusions>
+            <!-- <exclusions>
                 <exclusion>
                     <artifactId>jsr250-api</artifactId>
                     <groupId>javax.annotation</groupId>
@@ -53,13 +52,13 @@
                     <artifactId>javax.inject</artifactId>
                     <groupId>javax.inject</groupId>
                 </exclusion>
-            </exclusions>
+            </exclusions> -->
         </dependency>
 
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.13.4</version>
             <scope>test</scope>
         </dependency>
 
@@ -69,18 +68,18 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
+                <version>3.14.1</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>21</source>
+                    <target>21</target>
                 </configuration>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.0.1</version>
-                <executions>
+                <version>3.3.1</version>
+                <!-- <executions>
                     <execution>
                         <id>attach-sources</id>
                         <phase>package</phase>
@@ -88,13 +87,13 @@
                             <goal>jar</goal>
                         </goals>
                     </execution>
-                </executions>
+                </executions> -->
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>3.12.0</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -109,10 +108,10 @@
                 </configuration>
             </plugin>
 
-            <plugin>
+            <!-- <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.12</version>
+                <version>3.6.0</version>
                 <executions>
                     <execution>
                         <phase>install</phase>
@@ -136,11 +135,29 @@
                     <includeTestSourceDirectory>false</includeTestSourceDirectory>
                     <enableRulesSummary>true</enableRulesSummary>
                 </configuration>
-            </plugin>
+            </plugin> -->
+
+            <!-- <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.27.0</version>
+                <configuration>
+                    <minimumTokens>100</minimumTokens>
+                    <targetJdk>21</targetJdk>
+                </configuration>
+                <executions>
+                    <execution>
+                    <goals>
+                        <goal>cpd-check</goal>
+                    </goals>
+                    </execution>
+                </executions>
+            </plugin> -->
+
 
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.0.2</version>
+                <version>3.4.2</version>
                 <configuration>
                     <archive>
                         <manifestFile>
@@ -153,7 +170,7 @@
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
-                <version>2.3.7</version>
+                <version>6.0.0</version>
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
@@ -175,7 +192,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.6</version>
+                <version>3.21.0</version>
                 <configuration>
                 </configuration>
             </plugin>
@@ -190,7 +207,7 @@
             <plugin>
                 <groupId>com.atlassian.maven.plugins</groupId>
                 <artifactId>maven-clover2-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>4.0.6</version>
                 <configuration>
                     <cloverDatabase>${java.io.tmpdir}/clover/clover.db</cloverDatabase>
                     <singleCloverDatabase>true</singleCloverDatabase>
@@ -213,7 +230,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.5</version>
+                        <version>3.2.8</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -233,9 +250,9 @@
              the profile enables automatically on java 8. this is backwards compatible,
              if someone wants to build on java 7. -->
         <profile>
-          <id>doclint-java8-all-but-missing</id>
+          <id>doclint-java21-all-but-missing</id>
           <activation>
-            <jdk>[1.8,)</jdk>
+            <jdk>[21,)</jdk>
           </activation>
 
           <build>
@@ -243,7 +260,7 @@
               <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                  <version>3.1.0</version>
+                  <version>3.12.0</version>
                 <configuration>
                     <doclint>all</doclint>
                     <doclint>-missing</doclint>
@@ -285,7 +302,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.6</version>
+                <version>3.9.0</version>
                 <reportSets>
                     <reportSet>
 
@@ -312,7 +329,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jxr-plugin</artifactId>
-                <version>2.5</version>
+                <version>3.6.0</version>
             </plugin>
 
 

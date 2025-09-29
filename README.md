@@ -4,6 +4,8 @@ JSR107 (JCache)
 About
 -----
 
+This is an unofficial fork of JSR107 (JCache) migrated to the Jakarta namespace.
+
 *JCache* is the Java caching API. It was defined by JSR107. It defines a standard Java Caching API for use by developers and a standard SPI ("Service
  Provider Interface") for use by implementers. 
 
